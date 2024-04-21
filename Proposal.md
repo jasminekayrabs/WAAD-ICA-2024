@@ -33,4 +33,4 @@ This project aims to develop a web-based library application prototype to manage
 
 ## Conclusion
 
-This project will demonstrate a practical application of web development principles to create a functional and user-friendly library management system. By adhering to this proposal, we aim to achieve a successful project outcome.
+This project will demonstrate a practical application of web development principles to create a functional and user-friendly library management system. By adhering to this proposal, I aim to achieve a successful project outcome.
