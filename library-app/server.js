@@ -1,9 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const
+const librarianRoutes = require('./librarianRoutes');
 
-app.use(express.json()); // For parsing application/json
+app.use(express.json()); 
+app.use('/librarians', librarianRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running on port ${process.env.PORT}`);
