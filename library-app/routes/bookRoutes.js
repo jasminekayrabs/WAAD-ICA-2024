@@ -1,28 +1,39 @@
+const express = require('express');
 const router = require('express').Router();
 const pool = require('../db');
 
-// Route for getting all books
+// Getting books with optional filters eg Title, Author, etc.
+
 router.get('/', async (req, res) => {
+    let { title, author, genre } = req.query;
+    let baseQuery = `SELECT * FROM books WHERE `;
+    let conditions = [];
+    let params = [];
+
+    if (title) {
+        conditions.push(`title ILIKE $${conditions.length + 1}`);
+        params.push(`%${title}%`);
+    }
+    if (author) {
+        conditions.push(`author ILIKE $${conditions.length + 1}`);
+        params.push(`%${author}%`);
+    }
+    if (genre) {
+        conditions.push(`genre ILIKE $${conditions.length + 1}`);
+        params.push(`%${genre}%`);
+    }
+
+    if (conditions.length > 0) {
+        baseQuery += conditions.join(' AND ');
+    } else {
+        baseQuery = "SELECT * FROM books";  // If there are no filters provided, return all books
+    }
+
     try {
-        const allBooks = await pool.query('SELECT * FROM books');
-        res.json(allBooks.rows);
+        const result = await pool.query(baseQuery, params);
+        res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
-    }
-});
-
-// Route for getting a single book by id
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const book = await pool.query('SELECT * FROM books WHERE id = $1', [id]);
-        if (book.rows.length === 0) {
-            return res.status(404).send('Book not found');
-        }
-        res.json(book.rows[0]);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
+    } 
+})
 module.exports = router;
