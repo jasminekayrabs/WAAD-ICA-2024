@@ -5,6 +5,7 @@ const librarianRoutes = require('./routes/librarianRoutes');
 const bookRoutes = require('./routes/bookRoutes');
 
 app.use(express.json()); 
+app.use(express.static('public'));
 app.use('/librarians', librarianRoutes);
 app.use('/books', bookRoutes);
 
