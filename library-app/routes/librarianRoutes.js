@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const pool = require('./db');
+const pool = require('../db');
 
 // Registration of librarians
 router.post('/register', async (req, res) => {
