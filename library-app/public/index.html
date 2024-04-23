@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Catalog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- <div x-data="bookApp()" x-init="fetchBooks()">
+        <input type="text" x-model="search" x-on:input.debounce.500="fetchBooks" placeholder="Search books (title, author, genre)">
+        <ul>
+            <template x-for="book in books" :key="book.id">
+                <li x-text="book.title + ' by ' + book.author + ' (' + book.genre + ')'"></li>
+            </template>
+        </ul>
+    </div> -->
+
+    <div x-data="bookApp()" x-init="init()">
+        <input type="text" x-model="search" x-on:input.debounce.500="fetchBooks" placeholder="Search books (title, author, genre)">
+        <ul x-show="searchPerformed && books.length">
+            <template x-for="book in books" :key="book.id">
+                <li x-text="book.title + ' by ' + book.author + ' (' + book.genre + ')'"></li>
+            </template>
+        </ul>
+        <p x-show="searchPerformed && !books.length">No books found.</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="app.js"></script>
+</body>
+</html>
