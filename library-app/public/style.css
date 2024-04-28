@@ -1,21 +1,28 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
+    margin: 20px;
 }
 
-input[type="text"] {
+.search-input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
 ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
 }
 
 li {
+    background-color: #f9f9f9;
     padding: 10px;
-    background-color: #f0f0f0;
-    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.no-results {
+    color: #cc0000;
+    font-style: italic;
 }
