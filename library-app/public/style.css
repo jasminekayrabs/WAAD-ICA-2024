@@ -1,21 +1,52 @@
-body {
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: Arial, sans-serif;
-    margin: 20px;
+    background-color: #283c50;
+}
+
+.main-container {
+    text-align: center;
+    padding: 4rem; /* Consistent padding around the container */
+    box-shadow: 0 20px 20px rgba(0,0,0,0.1);
+    background: white;
+    border-radius: 8px;
+    width: fit-content;
+    min-width: 350px; 
+}
+
+h1 {
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.search-container {
+    width: 100%; 
+    color: #768ea6;
 }
 
 .search-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    box-sizing: border-box;
+    width: calc(100% - 40px); /* Adjust width to account for padding; assume 20px padding on each side */
+    max-width: 500px; /* Maximum width of the search input */
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-ul {
+.book-list {
     list-style: none;
-    padding: 0;
+    padding-left: 0;
+    text-align: left;
+    width: 100%; /* Full width to align with the search input above */
+    max-width: 500px; /* Maximum width to align with the search input */
 }
 
-li {
+.book-list li {
     background-color: #f9f9f9;
     padding: 10px;
     border-bottom: 1px solid #ccc;

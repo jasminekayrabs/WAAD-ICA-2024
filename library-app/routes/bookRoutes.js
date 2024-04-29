@@ -5,19 +5,14 @@ const authorize = require('../middleware/authorize');
 
 router.get('/', async (req, res) => {
     const { query } = req.query;
-    let baseQuery = "SELECT * FROM books";
-    let params = [];
-
-    if (query) {
-        baseQuery += " WHERE title ILIKE $1 OR author ILIKE $1 OR genre ILIKE $1";
-        params.push(`%${query}%`);
-    }
-
     try {
-        const result = await pool.query(baseQuery, params);
+        const result = await pool.query("SELECT * FROM books WHERE title ILIKE $1 OR author ILIKE $1 OR genre ILIKE $1", [`%${query}%`]);
+        if (result.rows.length === 0) {
+            return res.status(200).json([]); // Ensure an empty array is returned if no books are found
+        }
         res.json(result.rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(500).send(err.message);
     }
 })
 

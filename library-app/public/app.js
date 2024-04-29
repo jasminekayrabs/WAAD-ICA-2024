@@ -4,15 +4,17 @@ document.addEventListener('alpine:init', () => {
         books: [],
 
         init() {
-            //function is called when the component is initialized
+            // This function is called when the component is initialized
             console.log('Book search component initialized');
         },
 
         fetchBooks() {
-            if (!this.query) {
+            if (!this.query.trim()) {
                 this.books = [];
+                this.searchPerformed = false;
                 return;
             }
+            this.searchPerformed = true;
             fetch(`/api/books?query=${encodeURIComponent(this.query)}`)
                 .then(response => response.json())
                 .then(data => {
