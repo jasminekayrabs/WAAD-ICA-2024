@@ -11,6 +11,9 @@ function makeToken(user) {
 // Register a new librarian
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
+    if (!username || !password){
+        return res.status(400).send("Both username and password are required.");
+    }
     try{
         //check if user exists
         const userExists = await pool.query("SELECT * FROM librarians WHERE username = $1", [username]);
