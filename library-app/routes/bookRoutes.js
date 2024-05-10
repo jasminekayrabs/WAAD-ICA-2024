@@ -23,21 +23,6 @@ router.post('/', authorize, async (req, res) =>{
     if (!title || !author || !genre) {
         return res.status(400).send("Please provide a title, author, and genre.");
     }
-
-    // try {
-    //     const newBook = await pool.query(
-            // "INSERT INTO books (title, author, genre) VALUES ($1, $2, $3) RETURNING *",
-            // [title, author, genre]
-    //     );
-    //     if (newBook.rows.length > 0) {
-            // res.status(201).send(`You have successfully added ${title} by ${author}`);
-    //     } else {
-    //         throw new Error("The book could not be added.");
-    //     }
-    // } catch (error) {
-    //     res.status(500).json({error: error.message});
-    // }
-
     try {
         // Check if book exists 
         const existingBook = await pool.query(
