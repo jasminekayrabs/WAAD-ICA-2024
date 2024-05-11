@@ -10,6 +10,7 @@ function makeToken(user) {
 
 // Register a new librarian
 router.post('/register', async (req, res) => {
+    console.log(req.body);
     const { username, password } = req.body;
     if (!username || !password){
         return res.status(400).send("Both username and password are required.");
@@ -24,9 +25,9 @@ router.post('/register', async (req, res) => {
         // hash password and save user
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await pool.query("INSERT INTO librarians (username, password) VALUES ($1, $2) RETURNING *", [username, hashedPassword]);
-        res.status(201).send('You have been registered to the library app');
+        res.status(201).json({ message: 'You have been registered to the library app' });
     } catch (err){
-        res.status(500).json({ error: error.message});
+        res.status(500).json({ error: err.message});
     }
 });
     
@@ -46,7 +47,7 @@ router.post('/login', async (req, res) => {
         if (!validPassword){
             return res.status(401).send('Invalid username or password');
         }
-
+        
         //Generate JWT
         const token = makeToken({ id: user.rows[0].id, username: user.rows[0].username });
         res.json({ message: `Hello ${user.rows[0].username}`, token });
