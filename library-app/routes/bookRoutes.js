@@ -4,18 +4,29 @@ const pool = require('../db');
 const authorize = require('../middleware/authorize');
 
 router.get('/', async (req, res) => {
-    const { query } = req.query;
+    let { query } = req.query;
+    let sql, params;
+
+    if (query) {
+        sql = "SELECT * FROM books WHERE title ILIKE $1 OR author ILIKE $1 OR genre ILIKE $1";
+        params = [`%${query}%`];
+    } else {
+        sql = "SELECT * FROM books";  // No query provided, fetch all books
+        params = [];
+    }
+
     try {
-        const result = await pool.query("SELECT * FROM books WHERE title ILIKE $1 OR author ILIKE $1 OR genre ILIKE $1", [`%${query}%`]);
+        const result = await pool.query(sql, params);
         if (result.rows.length === 0) {
-            return res.status(200).json([]); // Ensure an empty array is returned if no books are found
+            res.status(200).json([]); // Ensuring an empty array is returned if no books are found
+        } else {
+            res.json(result.rows);
         }
-        res.json(result.rows);
     } catch (err) {
+        console.error("Error querying database:", err.message);
         res.status(500).send(err.message);
     }
-})
-
+});
 //Protected route for adding books
 router.post('/', authorize, async (req, res) =>{
     const { title, author, genre } = req.body;

@@ -10,7 +10,6 @@ function makeToken(user) {
 
 // Register a new librarian
 router.post('/register', async (req, res) => {
-    console.log(req.body);
     const { username, password } = req.body;
     if (!username || !password){
         return res.status(400).send("Both username and password are required.");
@@ -47,7 +46,7 @@ router.post('/login', async (req, res) => {
         if (!validPassword){
             return res.status(401).send('Invalid username or password');
         }
-        
+
         //Generate JWT
         const token = makeToken({ id: user.rows[0].id, username: user.rows[0].username });
         res.json({ message: `Hello ${user.rows[0].username}`, token });
