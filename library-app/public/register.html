@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register Librarian</title>
+    <link rel="stylesheet" href="css/register.css">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="js/register.js"></script>
 </head>
 <body>
     <div x-data="registerForm()" x-init="init">
@@ -17,41 +19,5 @@
             <button type="submit">Register</button>
         </form>
     </div>
-
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('registerForm', () => ({
-                username: '',
-                password: '',
-                init() {
-                    console.log('Register form component is initialized');
-                },
-                submit() {
-                    fetch('/api/auth/register', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username: this.username, password: this.password })
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => { throw new Error(text); });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        alert('Registration successful: ' + data.message);
-                        // Optional: Redirect or clear form
-                        this.username = '';
-                        this.password = '';
-                    })
-                    .catch(error => {
-                        console.error('Registration Failed:', error);
-                        alert('Registration Failed: ' + error.message);
-                    });
-                }
-            }));
-        });
-        </script>
-        
 </body>
 </html>

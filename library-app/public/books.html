@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Book Management</title>
+    <link rel="stylesheet" href="css/books.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="js/books.js"></script>
+</head>
+<body>
+    <div x-data="bookManager()" x-init="init">
+        <h1>Library Book Management</h1>
+        
+        <!-- Form to add a new book -->
+        <h2>Add New Book</h2>
+        <form @submit.prevent="addBook">
+            <input type="text" x-model="newBook.title" placeholder="Title" required>
+            <input type="text" x-model="newBook.author" placeholder="Author" required>
+            <input type="text" x-model="newBook.genre" placeholder="Genre" required>
+            <button type="submit">Add Book</button>
+        </form>
+        
+        <!-- List books and allow updates and deletes -->
+        <h2>Manage Books</h2>
+        <div x-show="books.length === 0">No books found.</div>
+        <template x-for="book in books" :key="book.id">
+            <div>
+                <input type="text" x-model="book.title" placeholder="Title">
+                <input type="text" x-model="book.author" placeholder="Author">
+                <input type="text" x-model="book.genre" placeholder="Genre">
+                <button @click="updateBook(book)">Update</button>
+                <button @click="deleteBook(book.id)">Delete</button>
+            </div>
+        </template>
+    </div>
+
+    
+</body>
+</html>

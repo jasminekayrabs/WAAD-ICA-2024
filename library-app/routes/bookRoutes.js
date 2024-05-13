@@ -27,6 +27,7 @@ router.get('/', async (req, res) => {
         res.status(500).send(err.message);
     }
 });
+
 //Protected route for adding books
 router.post('/', authorize, async (req, res) =>{
     const { title, author, genre } = req.body;
@@ -49,7 +50,8 @@ router.post('/', authorize, async (req, res) =>{
             "INSERT INTO books (title, author, genre) VALUES ($1, $2, $3) RETURNING *",
             [title, author, genre]
         );
-        res.status(201).send(`You have successfully added ${title} by ${author}`);
+        res.status(201).json(newBook.rows[0]);
+        // res.status(201).send(`You have successfully added ${title} by ${author}`);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

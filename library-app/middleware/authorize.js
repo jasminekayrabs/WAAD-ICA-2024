@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
-    const token = req.headers.authorization;
+    const token = req.headers.authorization;  // Directly use the token without splitting
+
     if (!token) {
-        return res.status(401).send('Access denied. No token provided.');
+        return res.status(401).json({ error: 'Access denied. No token provided.' });
     }
 
     try {
@@ -11,6 +12,7 @@ module.exports = (req, res, next) => {
         req.user = decoded;
         next();
     } catch (ex) {
-        res.status(400).send('Invalid token.');
+        console.error('Token verification failed:', ex.message);
+        res.status(400).json({ error: 'Invalid token.' });
     }
 };

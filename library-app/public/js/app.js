@@ -27,3 +27,4 @@ document.addEventListener('alpine:init', () => {
         }
     }));
 });
+

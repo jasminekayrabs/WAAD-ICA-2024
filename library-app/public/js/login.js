@@ -11,21 +11,26 @@ document.addEventListener('alpine:init', () => {
                     password: this.password
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.token) {
                     // Save the token to localStorage
-                    localStorage.setItem('jwt', data.token);
+                   sessionStorage .setItem('jwt', data.token);
                     alert('Login Successful: ' + data.message);
-                    // redirect the user or refresh the page -will decide later
-                    // window.location.href = '/some-secured-page.html';
+                    // Redirect to books.html upon successful login
+                    window.location.href = '/books.html';
                 } else {
-                    alert('Login Failed: ' + data.message);
+                    alert('Login Failed: Please check your credentials and try again.');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Login Failed');
+                alert('Login Failed: ' + error.message);
             });
         }
     }));
