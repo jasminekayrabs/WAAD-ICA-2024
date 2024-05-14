@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books by Category</title>
+    <link rel="stylesheet" href="css/categories.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="js/category.js"></script>
+</head>
+<body>
+    <div class="main-container" x-data="categoryBooks()" x-init="fetchCategoryBooks()">
+        <h1 x-text="'Books in ' + category"></h1>
+        <div class="grid-container">
+            <template x-for="book in books" :key="book.id">
+                <div class="book-card">
+                    <a :href="'details.html?id=' + book.id">
+                        <img x-bind:src="book.cover_image" alt="Cover Image" class="book-cover">
+                        <div class="book-info">
+                            <h3 x-text="book.title"></h3>
+                            <p x-text="'by ' + book.author"></p>
+                            <!-- <p x-text="book.genre"></p> -->
+                        </div>
+                    </a>    
+                </div>
+            </template>
+        </div>
+    </div>
+</body>
+</html>

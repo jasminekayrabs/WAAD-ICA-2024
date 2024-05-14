@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Search</title>
+    <title>Library App</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="js/app.js"></script>
@@ -11,13 +11,37 @@
 <body>
     <div class="main-container" x-data="bookSearch()" x-init="fetchBooks()">
         <h1>Welcome to the Library App</h1>
+        <!-- Categories Section -->
+    <div class="categories">
+        <div class="category" x-data="{category: 'Fiction'}">
+            <a href="/categories.html?category=Fiction">
+                <img src="images/fiction-cover.jpg" alt="Fiction" class="category-image">
+                <h2>Fiction</h2>
+            </a>
+        </div>
+        <div class="category" x-data="{category: 'Romance'}">
+            <a href="/categories.html?category=Romance">
+                <img src="images/coho.jpg" alt="Romance" class="category-image">
+                <h2>Romance</h2>
+            </a>
+        </div>
+        <div class="category" x-data="{category: 'History'}">
+            <a href="/categories.html?category=History">
+                <img src="images/history-cover.jpg" alt="History" class="category-image">
+                <h2>History</h2>
+            </a>
+        </div>
+    </div>
         <div class="search-container">
             <input type="text" x-model="query" x-on:input.debounce.500="fetchBooks" placeholder="Search for books (title, author, genre)" class="search-input">
         </div>
         <div x-show="books.length > 0">
             <ul class="book-list">
                 <template x-for="book in books" :key="book.id">
-                    <li x-text="book.title + ' by ' + book.author + ' (' + book.genre + ')'"></li>
+                    <!-- <li x-text="book.title + ' by ' + book.author + ' (' + book.genre + ')'"></li> -->
+                    <li>
+                        <a :href="'details.html?id=' + book.id" x-text="book.title + ' by ' + book.author + ' (' + book.genre + ')'"></a>
+                    </li>
                 </template>
             </ul>
         </div>
@@ -26,4 +50,7 @@
         </div>
     </div>
 </body>
+<footer>
+    
+</footer>
 </html>
