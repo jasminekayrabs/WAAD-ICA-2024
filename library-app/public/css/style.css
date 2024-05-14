@@ -57,3 +57,28 @@ h1 {
     color: #cc0000;
     font-style: italic;
 }
+
+.categories {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.category {
+    text-align: center;
+    width: 30%;
+}
+
+.category-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 20px;
+}
