@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <link rel="stylesheet" href="css/details.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="js/details.js"></script>
+</head>
+<body>
+    <div x-data="bookDetails()" x-init="fetchBookDetails()">
+        <div class="book-detail">
+            <img x-bind:src="book.cover_image" alt="Cover Image" class="book-cover">
+            <h1 x-text="book.title"></h1>
+            <h2 x-text="book.author"></h2>
+            <p x-text="book.genre"></p>
+            <p x-text="book.date_published"></p>
+            <p x-text="book.summary"></p>
+        </div>
+    </div>
+</html>
