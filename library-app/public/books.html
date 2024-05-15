@@ -14,27 +14,33 @@
         
         <!-- Form to add a new book -->
         <h2>Add New Book</h2>
-        <form @submit.prevent="addBook">
+        <form @submit.prevent="addBook" enctype="multipart/form-data">
             <input type="text" x-model="newBook.title" placeholder="Title" required>
             <input type="text" x-model="newBook.author" placeholder="Author" required>
             <input type="text" x-model="newBook.genre" placeholder="Genre" required>
+            <input type="file" name="cover_image" accept="image/*" @change="handleFileUpload" required>
+            <textarea x-model="newBook.summary" placeholder="Summary"></textarea>
             <button type="submit">Add Book</button>
         </form>
-        
+
         <!-- List books and allow updates and deletes -->
         <h2>Manage Books</h2>
+        <div class="grid-container" x-show="books.length > 0">
+            <template x-for="book in books" :key="book.id">
+                <div class="book-card">
+                    <img :src="'' + book.cover_image" alt="Book Cover" class="book-cover">
+                    <div class="book-info">
+                        <input type="text" x-model="book.title" class="editable-field" @click="$event.target.focus()">
+                        <input type="text" x-model="book.author" class="editable-field" @click="$event.target.focus()">
+                        <input type="text" x-model="book.genre" class="editable-field" @click="$event.target.focus()">
+                        <textarea x-model="book.summary" class="editable-field" @click="$event.target.focus()"></textarea>
+                        <button @click="updateBook(book)">Update</button>
+                        <button @click="deleteBook(book.id)">Delete</button>
+                    </div>
+                </div>
+            </template>
+        </div>
         <div x-show="books.length === 0">No books found.</div>
-        <template x-for="book in books" :key="book.id">
-            <div>
-                <input type="text" x-model="book.title" placeholder="Title">
-                <input type="text" x-model="book.author" placeholder="Author">
-                <input type="text" x-model="book.genre" placeholder="Genre">
-                <button @click="updateBook(book)">Update</button>
-                <button @click="deleteBook(book.id)">Delete</button>
-            </div>
-        </template>
     </div>
-
-    
 </body>
 </html>

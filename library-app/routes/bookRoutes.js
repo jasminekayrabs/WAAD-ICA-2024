@@ -2,7 +2,18 @@ const express = require('express');
 const router = require('express').Router();
 const pool = require('../db');
 const authorize = require('../middleware/authorize');
+const multer = require('multer');
+const path = require('path');
 
+// Configure storage for file uploads
+const storage = multer.diskStorage({
+    destination: path.join(__dirname, '../public/images'),  // Adjust the path as necessary
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    }
+});
+
+//getting books
 router.get('/', async (req, res) => {
     const { query, category} = req.query;
     // let { query, category } = req.query;
@@ -38,11 +49,22 @@ router.get('/', async (req, res) => {
     }
 });
 
-
+const upload = multer({
+    storage: storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Not an image! Please upload only images.'), false);
+        }
+    },
+    limits: { fileSize: 5 * 1024 * 1024 } // 5 MB limit for book cover imagae
+});
 
 //Protected route for adding books
-router.post('/', authorize, async (req, res) =>{
-    const { title, author, genre } = req.body;
+router.post('/', authorize, upload.single('cover_image'), async (req, res) =>{
+    const { title, author, genre, summary } = req.body;
+    const cover_image = req.file ? `/images/${req.file.filename}` : null;
     
     if (!title || !author || !genre) {
         return res.status(400).send("Please provide a title, author, and genre.");
@@ -60,48 +82,58 @@ router.post('/', authorize, async (req, res) =>{
 
         // Insert the new book if it doesnt exist
         const newBook = await pool.query(
-            "INSERT INTO books (title, author, genre) VALUES ($1, $2, $3) RETURNING *",
-            [title, author, genre]
+            "INSERT INTO books (title, author, genre, cover_image, summary) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [title, author, genre, cover_image, summary]
         );
         res.status(201).json(newBook.rows[0]);
-        // res.status(201).send(`You have successfully added ${title} by ${author}`);
     } catch (error) {
         console.error('Error adding book:', error);
         res.status(500).json({ error: error.message });
     }
 });
 
-//Protected route for updating book details
-router.patch('/:id', authorize, async (req, res) => {
+
+// PATCH route handling updates
+router.patch('/:id', authorize, upload.single('cover_image'), async (req, res) => {
     const { id } = req.params;
-    const { title, author, genre } = req.body;
-    const updates = {};
+    const { title, author, genre, summary } = req.body;
+    const updates = [];
+    const values = [id];
 
-    if (title) updates.title = title;
-    if (author) updates.author = author;
-    if (genre) updates.genre = genre;
+    if (title) {
+        updates.push(`title = $${updates.length + 2}`);
+        values.push(title);
+    }
+    if (author) {
+        updates.push(`author = $${updates.length + 2}`);
+        values.push(author);
+    }
+    if (genre) {
+        updates.push(`genre = $${updates.length + 2}`);
+        values.push(genre);
+    }
+    if (summary) {
+        updates.push(`summary = $${updates.length + 2}`);
+        values.push(summary);
+    }
+    if (req.file) {
+        updates.push(`cover_image = $${updates.length + 2}`);
+        values.push(`/images/${req.file.filename}`);
+    }
 
-    const setClause = Object.keys(updates)
-        .map((key, index) => `${key} = $${index + 2}`)
-        .join(', ');
+    if (!updates.length) return res.status(400).send('No updates provided.');
 
-    if (!setClause) return res.status(400).send('No valid fields provided for update.');
-
+    const sql = `UPDATE books SET ${updates.join(', ')} WHERE id = $1 RETURNING *`;
     try {
-        const updatedBook = await pool.query(
-            `UPDATE books SET ${setClause} WHERE id = $1 RETURNING *`,
-            [id, ...Object.values(updates)]
-        );
-
-        if (updatedBook.rows.length === 0) {
-            return res.status(404).send('Book not found.');
-        }
-
-        res.json(updatedBook.rows[0]);
+        const result = await pool.query(sql, values);
+        if (result.rows.length === 0) return res.status(404).send('Book not found.');
+        res.json(result.rows[0]);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Database error:', error);
+        res.status(500).send('Failed to update book');
     }
 });
+
 
 //Protected route for deleting
 router.delete('/:id', authorize, async (req, res) => {
@@ -118,6 +150,8 @@ router.delete('/:id', authorize, async (req, res) => {
     }
 });
 
+
+//Unprotected route for details about each book
 router.get('/:id', async (req, res) => {
     const { id } = req.params; // Extracting the book ID from the URL parameter
     try {
@@ -132,6 +166,5 @@ router.get('/:id', async (req, res) => {
         res.status(500).send(err.message); // Send a server error message if the query fails
     }
 });
-
 
 module.exports = router;

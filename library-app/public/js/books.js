@@ -1,71 +1,93 @@
-function bookManager() {
-    return {
-        newBook: { title: '', author: '', genre: '' },
+// Librarian management clientside js
+
+document.addEventListener('alpine:init', () => {
+    Alpine.data('bookManager', () => ({
+        newBook: {
+            title: '',
+            author: '',
+            genre: '',
+            cover_image: null,
+            summary: ''
+        },
         books: [],
+        activeBook: null,
+
         init() {
             this.fetchBooks();
         },
+
         fetchBooks() {
             fetch('/api/books', {
-                headers: { 
-                    'Authorization': sessionStorage.getItem('jwt'),
-                    'Cache-Control': 'no-cache'
+                headers: {
+                    'Authorization': sessionStorage.getItem('jwt')
                 }
             })
-            .then(response => {
-                if (!response.ok) {
-                    response.text().then(text => console.log(text));
-                    throw new Error('Failed to fetch books: ${response.status}');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
-                console.log("Books fetched:", this.bo)
                 this.books = data;
             })
             .catch(error => {
                 console.error('Error fetching books:', error);
             });
         },
+
+        // triggerFileInput(book){
+        //     this.activeBook = book; // Store the active book
+        //     this.$refs.fileInput.click(); //Trigger the hidden fle input
+        // },
+       
+
+        handleFileUpload(event){
+            const file = event.target.files[0];
+            if (file) {
+                this.newBook.cover_image = file;
+            }
+        },
+     
+
+
         addBook() {
-            console.log(JSON.stringify(this.newBook));
+            const formData = new FormData();
+            Object.entries(this.newBook).forEach(([key, value]) => {
+                formData.append(key, value instanceof File ? value : value.toString());
+            });
+        
             fetch('/api/books', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': sessionStorage.getItem('jwt')
+                    'Authorization': sessionStorage.getItem('jwt'),
                 },
-                body: JSON.stringify(this.newBook)
+                body: formData
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to add book: ${response.status}');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(() => {
                 alert('Book added successfully');
-                this.newBook = { title: '', author: '', genre: '' }; // Reset form
-                this.fetchBooks(); // Reload the list
+                this.resetNewBook();
+                this.fetchBooks();
             })
             .catch(error => {
                 console.error('Error adding book:', error);
-                alert('Error adding book');
+                alert(`Error adding book: ${error.message}`);
             });
         },
+        
         updateBook(book) {
+            const formData = new FormData();
+            Object.keys(book).forEach(key => {
+                if (book[key] !== null && book[key] !== undefined) {
+                    formData.append(key, book[key]);
+                }
+            });
+        
             fetch(`/api/books/${book.id}`, {
                 method: 'PATCH',
+                body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': sessionStorage.getItem('jwt')
-                },
-                body: JSON.stringify({ title: book.title, author: book.author, genre: book.genre })
+                }
             })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to update book');
-                }
+                if (!response.ok) throw new Error('Failed to update book');
                 return response.json();
             })
             .then(() => {
@@ -74,9 +96,10 @@ function bookManager() {
             })
             .catch(error => {
                 console.error('Error updating book:', error);
-                alert('Error updating book');
+                alert('Error updating book: ' + error.message);
             });
         },
+
         deleteBook(id) {
             fetch(`/api/books/${id}`, {
                 method: 'DELETE',
@@ -84,15 +107,23 @@ function bookManager() {
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Failed to delete book');
+                    throw new Error(`Failed to delete book: ${response.status}`);
                 }
+                return response.text(); 
+            })
+            .then(() => {
                 alert('Book deleted successfully');
-                this.books = this.books.filter(book => book.id !== id); // Update the list locally
+                this.books = this.books.filter(book => book.id !== id);  
             })
             .catch(error => {
                 console.error('Error deleting book:', error);
-                alert('Error deleting book');
+                alert('Error deleting book: ' + error.message);
             });
+        },
+        resetNewBook() {
+            this.newBook = { title: '', author: '', genre: '', cover_image: null, summary: '' }; 
         }
-    }
-}
+    }));
+});
+
+
