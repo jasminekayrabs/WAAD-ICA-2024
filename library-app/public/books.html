@@ -8,22 +8,33 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="js/books.js"></script>
 </head>
-<body>
-    <div x-data="bookManager()" x-init="init">
-        <h1>Library Book Management</h1>
-        
-        <!-- Form to add a new book -->
+<body x-data="bookManager()" x-init="init">
+    <header>
+        <h1>K-Library Management</h1>
+        <button class="logout-button" @click="logout()">Logout</button>
+    </header>
+    <div class="main-container">
         <h2>Add New Book</h2>
-        <form @submit.prevent="addBook" enctype="multipart/form-data">
+        <form @submit.prevent="addBook" enctype="multipart/form-data" class="add-book-form">
             <input type="text" x-model="newBook.title" placeholder="Title" required>
             <input type="text" x-model="newBook.author" placeholder="Author" required>
-            <input type="text" x-model="newBook.genre" placeholder="Genre" required>
-            <input type="file" name="cover_image" accept="image/*" @change="handleFileUpload" required>
+            <select x-model="newBook.genre" required>
+                <option value="" disabled selected>Select Genre</option>
+                <option value="Horror">Horror</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="History">History</option>
+                <option value="Romance">Romance</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Fantasy">Fantasy</option>
+            </select>
+            <div class="file-input-container">
+                <button class="file-input-button">Upload Book Cover</button>
+                <input type="file" name="cover_image" accept="image/*" @change="handleFileUpload" required>
+            </div>
             <textarea x-model="newBook.summary" placeholder="Summary"></textarea>
             <button type="submit">Add Book</button>
         </form>
 
-        <!-- List books and allow updates and deletes -->
         <h2>Manage Books</h2>
         <div class="grid-container" x-show="books.length > 0">
             <template x-for="book in books" :key="book.id">
@@ -34,8 +45,10 @@
                         <input type="text" x-model="book.author" class="editable-field" @click="$event.target.focus()">
                         <input type="text" x-model="book.genre" class="editable-field" @click="$event.target.focus()">
                         <textarea x-model="book.summary" class="editable-field" @click="$event.target.focus()"></textarea>
-                        <button @click="updateBook(book)">Update</button>
-                        <button @click="deleteBook(book.id)">Delete</button>
+                        <div class="book-buttons">
+                            <button @click="updateBook(book)" class="update-button">Update</button>
+                            <button @click="deleteBook(book.id)" class="delete-button">Delete</button>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -43,4 +56,9 @@
         <div x-show="books.length === 0">No books found.</div>
     </div>
 </body>
+<footer>
+    <div class="footer-content">
+        <p>If you have any book suggestions or concerns, <a href="mailto:jasmine.kabir@praguecollege.cz">email us</a>.</p>
+        <p>&copy; 2024 K-Library. All rights reserved.</p>
+    </div>
 </html>

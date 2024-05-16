@@ -122,6 +122,11 @@ document.addEventListener('alpine:init', () => {
         },
         resetNewBook() {
             this.newBook = { title: '', author: '', genre: '', cover_image: null, summary: '' }; 
+        },
+
+        logout(){
+            sessionStorage.removeItem('jwt');
+            window.location.href = 'index.html'
         }
     }));
 });

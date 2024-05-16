@@ -1,36 +1,213 @@
-body{
-    background-color: white;
-
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d6d6d6;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 20px;
+    background-color: rgb(42, 129, 156);
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    font-family: sans-serif;
+}
+
+.logout-button {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: rgb(88, 176, 203);
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+    background-color: rgb(95, 224, 205);
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #d6d6d6;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    margin-top: 30px;
+    font-size: 1.8em;
+    margin-bottom: 17px;
+    color: rgb(42, 129, 156);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.add-book-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.add-book-form input,
+.add-book-form textarea,
+.add-book-form select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.add-book-form select {
+    appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.add-book-form button {
+    padding: 15px;
+    background-color: rgb(42, 129, 156);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-book-form button:hover {
+    background-color: rgb(91, 213, 219);
+}
+
+.add-book-form .file-input-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.add-book-form .file-input-container input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.add-book-form .file-input-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(42, 129, 156);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-book-form .file-input-button:hover {
+    background-color: rgb(91, 213, 219);
+}
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
-    padding: 20px;
 }
 
 .book-card {
+    background-color: #fff;
     border: 1px solid #ccc;
-    padding: 10px;
-    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .book-cover {
     width: 100%;
     height: 200px;
-    object-fit: cover;
-    cursor: pointer;
+    object-fit: contain; /* Change this to ensure the entire image fits within the container */
+    object-position: center; /* Center the image within the container */
+    background-color: #f5f5f5; /* Add a background color for images with transparency */
 }
 
-.book-cover-input {
-    display: none;
+.book-info {
+    padding: 10px;
 }
 
 .editable-field {
     width: 100%;
-    border: none;
-    border-bottom: 1px solid gray;
-    margin: 5px 0;
     padding: 8px;
-    background: none;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.book-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.update-button,
+.delete-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.update-button {
+    background-color: rgb(42, 129, 156);
+    color: #fff;
+}
+
+.update-button:hover {
+    background-color: rgb(91, 213, 219);
+}
+
+.delete-button {
+    background-color: rgb(42, 129, 156);
+    color: #fff;
+}
+
+.delete-button:hover {
+    background-color: #e53935;
+}
+footer {
+    background-color: rgba(146, 146, 146, 0.825);
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-content a {
+    color: rgb(42, 129, 156);
+    text-decoration: none;
+}
+
+.footer-content a:hover {
+    color: rgb(95, 224, 205);
+    text-decoration: underline;
 }

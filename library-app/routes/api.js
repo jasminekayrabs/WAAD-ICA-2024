@@ -20,7 +20,9 @@ router.get('/register', (req, res) => {
 router.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'login.html'));
 });
-
+router.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
 
 
 
