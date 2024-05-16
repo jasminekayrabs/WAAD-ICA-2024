@@ -20,7 +20,8 @@ document.addEventListener('alpine:init', () => {
             })
             .then(data => {
                 alert('Registration successful: ' + data.message);
-                
+                // Redirect to books.html upon successful login
+                window.location.href = '/login.html';   
             })
             .catch(error => {
                 console.error('Registration Failed:', error);
