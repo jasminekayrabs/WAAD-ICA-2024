@@ -9,36 +9,25 @@
     <script src="js/app.js"></script>
 </head>
 <body>
+    <header>
+        <div class="header-left">
+            <h1>K-Library</h1>
+        </div>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn">Login</a>
+            <a href="register.html" class="btn">Register</a>
+        </div>
+    </header>
     <div class="main-container" x-data="bookSearch()" x-init="fetchBooks()">
-        <h1>Welcome to the Library App</h1>
-        <!-- Categories Section -->
-    <div class="categories">
-        <div class="category" x-data="{category: 'Fiction'}">
-            <a href="/categories.html?category=Fiction">
-                <img src="images/fiction-cover.jpg" alt="Fiction" class="category-image">
-                <h2>Fiction</h2>
-            </a>
-        </div>
-        <div class="category" x-data="{category: 'Romance'}">
-            <a href="/categories.html?category=Romance">
-                <img src="images/coho.jpg" alt="Romance" class="category-image">
-                <h2>Romance</h2>
-            </a>
-        </div>
-        <div class="category" x-data="{category: 'History'}">
-            <a href="/categories.html?category=History">
-                <img src="images/history-cover.jpg" alt="History" class="category-image">
-                <h2>History</h2>
-            </a>
-        </div>
-    </div>
+        <h2 class="welcome">Welcome to the Library App!</h2>
+        <img src="images/shelf.jpg" alt="Library Banner" class="banner-image">
+        <!-- <p>Browse books by categories or feel free to search!</p> -->
         <div class="search-container">
             <input type="text" x-model="query" x-on:input.debounce.500="fetchBooks" placeholder="Search for books (title, author, genre)" class="search-input">
         </div>
         <div x-show="books.length > 0">
             <ul class="book-list">
                 <template x-for="book in books" :key="book.id">
-                    <!-- <li x-text="book.title + ' by ' + book.author + ' (' + book.genre + ')'"></li> -->
                     <li>
                         <a :href="'details.html?id=' + book.id" x-text="book.title + ' by ' + book.author + ' (' + book.genre + ')'"></a>
                     </li>
@@ -48,9 +37,52 @@
         <div x-show="searchPerformed && books.length === 0" class="no-results">
             <p>No books found. Please try another title, author or genre</p>
         </div>
+        <!-- Categories Section -->
+        <h2 class="categories-heading">Browse by Categories</h2>
+        <div class="categories">
+            <div class="category" x-data="{category: 'Thriller'}">
+                <a href="/categories.html?category=Thriller">
+                    <img src="images/thriller.jpg" alt="Thriller" class="category-image">
+                    <h2>Thriller</h2>
+                </a>
+            </div>
+            <div class="category" x-data="{category: 'History'}">
+                <a href="/categories.html?category=History">
+                    <img src="images/history.jpg" alt="History" class="category-image">
+                    <h2>History</h2>
+                </a>
+            </div>
+            <div class="category" x-data="{category: 'Sci-Fi'}">
+                <a href="/categories.html?category=Sci-fi">
+                    <img src="images/sci-fi.jpg" alt="Scifi" class="category-image">
+                    <h2>Sci-Fi</h2>
+                </a>
+            </div>
+            <div class="category" x-data="{category: 'Romance'}">
+                <a href="/categories.html?category=Romance">
+                    <img src="images/romance.jpg" alt="Romance" class="category-image">
+                    <h2>Sci-Fi</h2>
+                </a>
+            </div>
+            <div class="category" x-data="{category: 'Horror'}">
+                <a href="/categories.html?category=Horror">
+                    <img src="images/horror.jpg" alt="Horror" class="category-image">
+                    <h2>Horror</h2>
+                </a>
+            </div>
+            <div class="category" x-data="{category: 'Fantasy'}">
+                <a href="/categories.html?category=Fantasy">
+                    <img src="images/fantasy.jpg" alt="Fantasy" class="category-image">
+                    <h2>Fantasy</h2>
+                </a>
+            </div>
+        </div>
     </div>
 </body>
 <footer>
-    
+    <div class="footer-content">
+        <p>If you have any book suggestions or concerns, <a href="mailto:jasmine.kabir@praguecollege.cz">email us</a>.</p>
+        <p>&copy; 2024 K-Library. All rights reserved.</p>
+    </div>
 </footer>
 </html>
