@@ -17,7 +17,7 @@ The back-end provides RESTful API endpoints for:
 ### Database
 -PostgreSQL.
 ### Pages
--**Home Page `/index.html`**: Allows users to search for books or select a category they would like to browse.
+- **Home Page `/index.html`**: Allows users to search for books or select a category they would like to browse.
 - **Login Page `/login.html`**: Authenticates librarians and stores the JWT to session storage.
 - **Register Page `/register.html`**: Registers new librarians.
 - **Book Management Page '/books.html`**: Allows librarians to manage the book inventory.
