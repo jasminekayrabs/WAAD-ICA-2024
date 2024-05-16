@@ -8,6 +8,15 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body>
+    <header>
+        <div class="header-left">
+            <h1>K-Library</h1>
+        </div>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn">Login</a>
+            <a href="register.html" class="btn">Register</a>
+        </div>
+    </header>
     <div class="main-container" x-data="categoryBooks()" x-init="fetchCategoryBooks()">
         <h1 x-text="'Books in ' + category"></h1>
         <div class="grid-container">
@@ -15,17 +24,11 @@
                 <div class="book-card">
                     <a :href="'details.html?id=' + book.id">
                         <img x-bind:src="book.cover_image" alt="Cover Image" class="book-cover">
-                        <div class="book-info">
-                            <h3 x-text="book.title"></h3>
-                            <p x-text="'by ' + book.author"></p>
-                            <!-- <p x-text="book.genre"></p> -->
-                        </div>
                     </a>    
                 </div>
             </template>
         </div>
     </div>
-
     <script src="js/categories.js"></script>
 </body>
 </html>

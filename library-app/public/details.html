@@ -9,14 +9,25 @@
     <script src="js/details.js"></script>
 </head>
 <body>
-    <div x-data="bookDetails()" x-init="fetchBookDetails()">
+    <header>
+        <div class="header-left">
+            <h1>K-Library</h1>
+        </div>
+        <div class="auth-buttons">
+            <a href="login.html" class="btn">Login</a>
+            <a href="register.html" class="btn">Register</a>
+        </div>
+        </header>
+    <div class="main-container" x-data="bookDetails()" x-init="fetchBookDetails()">
         <div class="book-detail">
             <img x-bind:src="book.cover_image" alt="Cover Image" class="book-cover">
-            <h1 x-text="book.title"></h1>
-            <h2 x-text="book.author"></h2>
-            <p x-text="book.genre"></p>
-            <p x-text="book.date_published"></p>
-            <p x-text="book.summary"></p>
+            <div class="book-info">
+                <h1 x-text="book.title"></h1>
+                <h2 x-text="book.author"></h2>
+                <p><strong>Genre:</strong> <span x-text="book.genre"></span></p>
+                <p class="summary" x-text="book.summary"></p>
+            </div>
         </div>
     </div>
+</body>
 </html>
