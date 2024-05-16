@@ -2,7 +2,7 @@
 
 ## Project Concept and Objective
 
-This project aims to develop a web-based library application prototype to manage and browse a collection of books. It will support two user roles with distinct functionalities: Readers, who can browse the catalog, and Librarians, who can manage the book entries.
+This project aims to develop a web-based library application prototype to manage and browse a collection of books. It will support two user roles with distinct functionalities: Readers, who can browse the catalog, and authorized Librarians, who can manage the book entries. It uses JWT for authorization, Alpine.js for frontend and node.js for backend.
 
 ## User Types and Functionalities
 

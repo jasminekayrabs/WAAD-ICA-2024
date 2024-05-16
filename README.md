@@ -110,4 +110,3 @@ To set up and run the project locally, follow these steps:
 
 ## Conclusion
 The K-Library Management System successfully meets the requirements for managing a library's book inventory. Despite some challenges during development, the application provides a robust and user-friendly solution for librarians and users alike.
-
