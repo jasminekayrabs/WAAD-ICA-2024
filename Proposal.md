@@ -1,3 +1,4 @@
+# JASMINE KABIR RABIU WAAD-ICA
 # Library Application Prototype Proposal
 
 ## Project Concept and Objective
@@ -27,9 +28,9 @@ This project aims to develop a web-based library application prototype to manage
 
 1. **Setup and Planning:** Complete by [15.03.2024].
 2. **Backend Development:** Complete by [30.04.2024].
-3. **Frontend Development:** Complete by [20.05.2024].
-4. **Testing and Refinement:** Complete by [25.05.2024].
-5. **Deployment:** Complete by [26.05.2024].
+3. **Frontend Development:** Complete by [15.05.2024].
+4. **Testing and Refinement:** Complete by [20.05.2024].
+5. **Deployment:** Complete by [23.05.2024].
 
 ## Conclusion
 
