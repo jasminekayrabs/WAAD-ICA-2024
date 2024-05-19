@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="css/books.css">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="js/books.js"></script>
+    <script>
+        // Function to check if user is logged in
+        function checkAuthentication() {
+            const token = sessionStorage.getItem('jwt');
+            if (!token) {
+                window.location.href = 'index.html'; // Redirect to home page if not logged in
+            }
+        }
+        // Call the function when the page loads
+        document.addEventListener('DOMContentLoaded', checkAuthentication);
+    </script>
 </head>
 <body x-data="bookManager()" x-init="init">
     <header>
