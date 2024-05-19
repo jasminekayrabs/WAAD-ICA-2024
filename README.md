@@ -58,12 +58,23 @@ To set up and run the project locally, follow these steps:
    ```bash
    npm install
    ```
-3. **Run the Development Server**:
+3. **Connect Database**:
+   Create a postgres database and run the db.sql script to create schema. Connect it to the library-app         using a tool like SQL tools.
+4. **Generate SECRET KEY**
+   Run the following command in your terminal:
+   ```bash
+   openssl rand -base64 32
+   ```
+5. **Create .env File**: Create a new file .env and add the following lines:
+   PORT=3000
+   DATABASE_URL=postgres://your_username:@localhost:5432/db_name
+   SECRET= add the generated secret key
+6. **Run the Development Server**:
    Start the development server:
    ```bash
    node server.js
    ```
-4. **Access the Application**:
+7. **Access the Application**:
    Open your web browser and navigate to `http://localhost:3000` to access the application.
 
 ## Usage
