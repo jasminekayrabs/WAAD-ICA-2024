@@ -4,7 +4,7 @@
 K-Library Management System is a web-based application designed to manage a library's book inventory. It allows librarians to add, update, and delete books but only when they are authorized. Users can browse books by categories, or simply search by title, author, or genre and view detailed information about each book.
 
 ### Deployed version:
-[K-Library](http://164.90.234.156/index.html)
+[K-Library](http://164.90.234.155/index.html)
 
 ## Architecture
 The K-Library Management System is built with a front-end using HTML, CSS, and JavaScript. The back-end is a RESTful API providing endpoints for book management. Alpine.js is used for front-end interactivity.
