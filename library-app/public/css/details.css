@@ -101,3 +101,11 @@ p {
     margin-top: 20px;
     line-height: 1.6;
 }
+@media (max-width: 720px) {
+    .header-left h1 {
+        font-size: 2em; 
+    }
+    .auth-buttons .btn {
+        padding: 6px 12px; 
+    }
+}

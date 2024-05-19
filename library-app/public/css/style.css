@@ -203,7 +203,7 @@ footer {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 720px) {
     .category {
         width: calc(100% - 40px);
     }
@@ -211,5 +211,28 @@ footer {
     .book-list {
         width: 100%; 
         max-width: 500px; 
+    }
+    .header-left h1 {
+        font-size: 2em; 
+    }
+    .auth-buttons .btn {
+        padding: 6px 12px; 
+    }
+
+    .category {
+        width: calc(100% - 0px); 
+    }
+
+    .search-input {
+        width: 500px;
+        padding: 12px;
+    }
+
+    .book-list {
+        width: 100%;
+        max-width: 500px;
+    }
+    .main-container {
+        padding: 0;
     }
 }
