@@ -1,4 +1,5 @@
 # K-Library Management System
+Github url:  https://github.com/jasminekayrabs/WAAD-ICA-2024
 
 ## Overview
 K-Library Management System is a web-based application designed to manage a library's book inventory. It allows librarians to add, update, and delete books but only when they are authorized. Users can browse books by categories, or simply search by title, author, or genre and view detailed information about each book.
@@ -48,6 +49,9 @@ The development process involved several key stages:
 3. **Implementation**: Developing the front-end and back-end components.
 4. **Testing**: Ensuring all functionalities work as expected and the user interface is responsive.
 5. **Deployment**: Preparing the application for deployment on a web server.
+
+## Deployment
+After final testing of the web application, it was deployed on Digital ocean:  http://164.90.234.155/index.html 
 
 ## Setup and Installation
 To set up and run the project locally, follow these steps:
